@@ -2,6 +2,8 @@
 
 Sistema de Eventos encomendado pela Morena.
 
+[![Build Status](https://travis-ci.org/lucasgondim/eventex-lucasgondim.svg?branch=master)](https://travis-ci.org/lucasgondim/eventex-lucasgondim)[![Code Health](https://landscape.io/github/lucasgondim/eventex-lucasgondim/master/landscape.svg?style=flat)](https://landscape.io/github/lucasgondim/eventex-lucasgondim/master)
+
 ## Como desenvolver?
 
 1. Clone o repositório.
