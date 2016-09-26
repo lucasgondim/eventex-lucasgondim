@@ -21,6 +21,8 @@ class SubscriptionForm(forms.Form):
         return name.title()
 
     def clean(self):
+        if 'email' in self.errors:
+            return self.cleaned_data
         if not self.cleaned_data.get('email') and not self.cleaned_data.get('phone'):
             raise ValidationError('Informe seu e-mail ou telefone.')
         return self.cleaned_data

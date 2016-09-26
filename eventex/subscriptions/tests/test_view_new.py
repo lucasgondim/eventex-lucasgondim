@@ -42,10 +42,11 @@ class SubscriptionsNewPostValid(TestCase):
     def setUp(self):
         data = dict(name='Lucas Gondim', cpf='12345678901', email='lucascgondim@gmail.com', phone='34-99150-5026')
         self.response = self.client.post(r('subscriptions:new'), data)
+        self.hashId = Subscription.objects.first().hashId
 
     def test_post(self):
-        """Valid POST should redirect to /inscricao/"""
-        self.assertRedirects(self.response, r('subscriptions:detail', 1))
+        """Valid POST should redirect to /inscricao/hashId/"""
+        self.assertRedirects(self.response, r('subscriptions:detail', self.hashId))
 
     def test_send_subscribe_email(self):
         self.assertEqual(1, len(mail.outbox))
@@ -83,3 +84,10 @@ class TemplateRegressionTest(TestCase):
         response = self.client.post(r('subscriptions:new'), invalid_data)
 
         self.assertContains(response, '<ul class="errorlist nonfield">')
+
+    def test_has_no_phone_and_invalid_email(self):
+        invalid_data = dict(name='Lucas Gondim', cpf='12345678901', email='lucasgndim')
+        response = self.client.post(r('subscriptions:new'), invalid_data)
+
+        form = response.context['form']
+        self.assertTrue(form.errors)

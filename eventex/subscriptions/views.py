@@ -6,6 +6,7 @@ from django.shortcuts import render, resolve_url as r
 from django.template.loader import render_to_string
 from eventex.subscriptions.forms import SubscriptionForm
 from eventex.subscriptions.models import Subscription
+import uuid
 
 
 def new(request):
@@ -29,16 +30,16 @@ def create(request):
                'subscriptions/subscription_email.txt',
                {'subscription': subscription})
 
-    return HttpResponseRedirect(r('subscriptions:detail', subscription.pk))
+    return HttpResponseRedirect(r('subscriptions:detail', str(subscription.hashId)))
 
 
 def empty_form(request):
     return render(request, 'subscriptions/subscription_form.html', {'form': SubscriptionForm()})
 
 
-def detail(request, pk):
+def detail(request, hashid):
     try:
-        subscription = Subscription.objects.get(pk=pk)
+        subscription = Subscription.objects.get(hashId=hashid)
     except Subscription.DoesNotExist:
         raise Http404
 
