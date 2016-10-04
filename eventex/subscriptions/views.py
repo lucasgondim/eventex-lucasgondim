@@ -14,13 +14,19 @@ def new(request):
     return empty_form(request)
 
 
+def empty_form(request):
+    return render(request, 'subscriptions/subscription_form.html',
+                  {'form': SubscriptionForm()})
+
+
 def create(request):
     form = SubscriptionForm(request.POST)
 
     if not form.is_valid():
         return render(request, 'subscriptions/subscription_form.html', {'form': form})
 
-    subscription = Subscription.objects.create(**form.cleaned_data)
+    subscription = form.save()
+    # subscription = Subscription.objects.create(**form.cleaned_data)
 
     _send_mail('Confirmação de inscrição',
                settings.DEFAULT_FROM_EMAIL,
