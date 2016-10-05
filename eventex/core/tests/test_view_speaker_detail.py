@@ -8,8 +8,8 @@ class SpeakerDetailGet(TestCase):
         Speaker.objects.create(
             name='Grace Hopper',
             slug='grace-hopper',
-            photo='htpp://hbn.link/hopper-pic',
-            website='htpp://hbn.link/hopper-site',
+            photo='http://hbn.link/hopper-pic',
+            website='http://hbn.link/hopper-site',
             description='Programadora e almirante.'
         )
         self.response = self.client.get(r('speaker_detail', slug='grace-hopper'))
